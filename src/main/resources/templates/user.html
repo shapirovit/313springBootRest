@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Человек</title>
+</head>
+<body>
+
+<div>Id: </div><div th:text="${user.getId()}"></div><br/>
+<div>Логин: </div><div th:text="${user.getLogin()}"></div><br/>
+<div>Пароль: </div><div th:text="${user.getPassword()}"></div><br/>
+<div>Имя: </div><div th:text="${user.getFirstName()}"></div><br/>
+<div>Фамилия: </div><div th:text="${user.getLastName()}"></div><br/>
+<div>Е-мэйл: </div><div th:text="${user.getEmail()}"></div><br/>
+<div>Возраст: </div><div th:text="${user.getAge()}"></div><br/>
+<div>Права: </div><th:block th:each="role : ${user.getRoles()}">
+    <div th:text="${role.getTitle()}"></div><div> </div>
+</th:block>
+
+
+<!--<div>Права: </div><div th:text="${user.getRoles()}"></div><br/>-->
+
+<!--<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Редактировать пользователя</a>-->
+
+<!--<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">-->
+<!--    <input type="submit" value="Удалить пользователя">-->
+<!--</form>-->
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Выйти"/>
+</form>
+
+</body>
+</html>
