@@ -71,13 +71,6 @@ public class UsersController {
     public String updateUser(@PathVariable("id") Long id,
                              @ModelAttribute("user") User user,
                              @RequestParam(value = "rolesId", required = false) int[] roles) {
-//        if (roles != null) {
-//            userService.updateUser(id, user, roles);
-//        } else {
-////            int[] arrRoles = null;
-//            userService.updateUser(id, user, null);
-//        }
-//        userService.updateUser(id, user);
         userService.updateUser(id, user, roles);
         return "redirect:/users";
     }

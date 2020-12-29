@@ -40,9 +40,6 @@
         <td>
             <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getAge()}"></a>
         </td>
-<!--        <td>-->
-<!--            <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getRoles().size()}"></a>-->
-<!--        </td>-->
         <td>
             <th:block th:each="role : ${user.getRoles()}">
                 <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${role.getTitle()}"></a><div> </div>

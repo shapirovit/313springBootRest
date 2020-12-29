@@ -30,13 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); // конфигурация для прохождения аутентификации
     }
 
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("USER").password("USER").roles("USER");
-//        auth.inMemoryAuthentication().withUser("OTHER").password("OTHER").roles("OTHER");
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
@@ -70,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // защищенные URL
                 .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/admin/").access("hasAnyRole('ROLE_ADMIN')")
+//                .antMatchers("/admin/").anonymous()
                 .anyRequest().access("hasAnyRole('ROLE_ADMIN')");
     }
 

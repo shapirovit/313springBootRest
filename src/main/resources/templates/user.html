@@ -17,15 +17,6 @@
     <div th:text="${role.getTitle()}"></div><div> </div>
 </th:block>
 
-
-<!--<div>Права: </div><div th:text="${user.getRoles()}"></div><br/>-->
-
-<!--<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Редактировать пользователя</a>-->
-
-<!--<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">-->
-<!--    <input type="submit" value="Удалить пользователя">-->
-<!--</form>-->
-
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Выйти"/>
 </form>

@@ -72,7 +72,7 @@ public class Role implements GrantedAuthority {
                 "id=" + id +
                 ", role='" + role + '\'' +
                 ", title='" + title + '\'' +
-                ", users.size()=" + users.size() +
+//                ", users.size()=" + users.size() +
                 '}';
     }
 
