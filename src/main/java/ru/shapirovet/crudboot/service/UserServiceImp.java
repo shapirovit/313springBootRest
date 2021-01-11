@@ -54,7 +54,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public void updateUser(Long id, User user, int[] roles) {
         user.setId(id);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (!user.getPassword().equals("")) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        } else {
+            user.setPassword(getUserById(id).getPassword());
+        }
         if (roles != null) {
             for (int roleId : roles) {
                 user.addRole(roleService.getRoleById((long) roleId));

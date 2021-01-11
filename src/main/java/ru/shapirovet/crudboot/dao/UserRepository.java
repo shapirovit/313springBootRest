@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    @Query("from User u join fetch u.roles where u.login = :login")
+    @Query("from User u join fetch u.roles where u.email = :login")
     public User findUserByLogin(@Param("login") String login);
 
     @Query("select distinct u from User u join fetch u.roles")

@@ -19,7 +19,7 @@ public class UserController {
 
 	@GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "login3";
     }
 
 	@GetMapping("/user")
@@ -28,7 +28,13 @@ public class UserController {
 		String username = authentication.getName();
 		User user = userService.getUserByLogin(username);
 		model.addAttribute("user", user);
-		return "user";
+
+		boolean isUser = user.getRoles().stream().anyMatch(role -> role.getRole().equals("ROLE_USER"));
+		boolean isAdmin = user.getRoles().stream().anyMatch(role -> role.getRole().equals("ROLE_ADMIN"));
+		model.addAttribute("isUser", isUser);
+		model.addAttribute("isAdmin", isAdmin);
+
+		return "user3";
 	}
 
 }
