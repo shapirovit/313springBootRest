@@ -1,27 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Человек</title>
+    <title>User page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-
-<div>Id: </div><div th:text="${user.getId()}"></div><br/>
-<div>Логин: </div><div th:text="${user.getLogin()}"></div><br/>
-<div>Пароль: </div><div th:text="${user.getPassword()}"></div><br/>
-<div>Имя: </div><div th:text="${user.getFirstName()}"></div><br/>
-<div>Фамилия: </div><div th:text="${user.getLastName()}"></div><br/>
-<div>Е-мэйл: </div><div th:text="${user.getEmail()}"></div><br/>
-<div>Возраст: </div><div th:text="${user.getAge()}"></div><br/>
-<div>Права: </div><th:block th:each="role : ${user.getRoles()}">
-    <div th:text="${role.getTitle()}"></div><div> </div>
-</th:block>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Выйти"/>
-</form>
+<div class="container-fluid">
+    <div class="row bg-dark text-white py-2">
+        <div class="col mr-auto">
+            <span class="font-weight-bold" sec:authentication="name"></span>
+<!--            <span class="font-weight-bold" th:text="${user.getEmail()}"></span>-->
+            <span> with roles: </span>
+            <th:block th:each="role : ${user.getRoles()}">
+                <span th:text="${role.getRole().replace('ROLE_', '')}"></span><span> </span>
+            </th:block>
+        </div>
+        <div class="col-auto"><a class="text-decoration-none text-white-50" th:href="@{/logout}" th:text="Logout"></a></div>
+    </div>
+    <div class="row">
+        <div class="col-2 px-0">
+            <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link" aria-selected="false" th:href="@{/admin}" th:text="Admin" sec:authorize="hasRole('ROLE_ADMIN')"></a>
+                <a class="nav-link active" aria-selected="true" th:href="@{/user}" th:text="User" sec:authorize="hasRole('ROLE_USER')"></a>
+            </div>
+        </div>
+        <div class="col-10 bg-light px-4 min-vh-100">
+            <p class="h1 my-3 ml-2">User information-page</p>
+            <div class="ml-2 bg-light">
+                <div class="border rounded">
+                    <div class="py-3 pl-3 border-bottom">
+                        <p class="h5 mb-0">About user</p>
+                    </div>
+                    <div class="px-3 py-3 bg-white">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div th:text="${user.getId()}"></div>
+                                    </td>
+                                    <td>
+                                        <div th:text="${user.getFirstName()}"></div>
+                                    </td>
+                                    <td>
+                                        <div th:text="${user.getLastName()}"></div>
+                                    </td>
+                                    <td>
+                                        <div th:text="${user.getAge()}"></div>
+                                    </td>
+                                    <td>
+                                        <div th:text="${user.getEmail()}"></div>
+                                    </td>
+                                    <td>
+                                        <th:block th:each="role : ${user.getRoles()}">
+                                            <span th:text="${role.getRole().replace('ROLE_', '')}"></span><span> </span>
+                                        </th:block>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -1,4 +1,4 @@
-package ru.shapirovet.crudboot.dao;
+package ru.shapirovet.crudboot.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

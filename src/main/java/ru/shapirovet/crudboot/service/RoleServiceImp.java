@@ -2,7 +2,7 @@ package ru.shapirovet.crudboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.shapirovet.crudboot.dao.RoleRepository;
+import ru.shapirovet.crudboot.repository.RoleRepository;
 import ru.shapirovet.crudboot.model.Role;
 
 import java.util.List;

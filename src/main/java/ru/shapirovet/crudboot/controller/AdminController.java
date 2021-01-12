@@ -9,10 +9,7 @@ import ru.shapirovet.crudboot.model.User;
 import ru.shapirovet.crudboot.service.RoleService;
 import ru.shapirovet.crudboot.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -30,17 +27,10 @@ public class AdminController {
         List<User> list = userService.listUsers();
         model.addAttribute("usersList", list);
         model.addAttribute("listRole", roleService.listRole());
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User userLogin = userService.getUserByLogin(username);
         model.addAttribute("userLogin", userLogin);
-
-        boolean isUser = userLogin.getRoles().stream().anyMatch(role -> role.getRole().equals("ROLE_USER"));
-        boolean isAdmin = userLogin.getRoles().stream().anyMatch(role -> role.getRole().equals("ROLE_ADMIN"));
-        model.addAttribute("isUser", isUser);
-        model.addAttribute("isAdmin", isAdmin);
-
         return "admin";
     }
 
@@ -55,18 +45,16 @@ public class AdminController {
     }
 
     @PostMapping("/admin")
-    public String addUser(@ModelAttribute("newUser") User user,
-                          @RequestParam(value = "rolesId", required = false) int[] roles) {
+    public String addUser(@ModelAttribute("newUser") User user) {
         System.out.println("USER in POST-Mapping = " + user);
-        userService.addUser(user, roles);
+        userService.addUser(user);
         return "redirect:/admin";
     }
 
     @PatchMapping("/admin/{id}")
     public String updateUser(@PathVariable("id") Long id,
-                             @ModelAttribute("user") User user,
-                             @RequestParam(value = "rolesId", required = false) int[] roles) {
-        userService.updateUser(id, user, roles);
+                             @ModelAttribute("user") User user) {
+        userService.updateUser(id, user);
         return "redirect:/admin";
     }
 

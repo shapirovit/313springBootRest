@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ru.shapirovet.crudboot.dao.UserRepository;
+import ru.shapirovet.crudboot.repository.UserRepository;
 import ru.shapirovet.crudboot.model.User;
 
 import java.util.List;
@@ -41,30 +41,19 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addUser(User user, int[] roles) {
-        if (roles != null) {
-            for (int roleId : roles) {
-                user.addRole(roleService.getRoleById((long) roleId));
-            }
-        }
+    public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public void updateUser(Long id, User user, int[] roles) {
+    public void updateUser(Long id, User user) {
         user.setId(id);
         if (!user.getPassword().equals("")) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
             user.setPassword(getUserById(id).getPassword());
         }
-        if (roles != null) {
-            for (int roleId : roles) {
-                user.addRole(roleService.getRoleById((long) roleId));
-            }
-        }
-
         userRepository.save(user);
     }
 
