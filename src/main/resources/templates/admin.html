@@ -57,154 +57,6 @@
                             </tr>
                             </thead>
                             <tbody id="main-body-table">
-                            <tr th:each="user : ${usersList}">
-                                <td>
-                                    <div th:text="${user.getId()}"></div>
-                                </td>
-                                <td>
-                                    <div th:text="${user.getFirstName()}"></div>
-                                </td>
-                                <td>
-                                    <div th:text="${user.getLastName()}"></div>
-                                </td>
-                                <td>
-                                    <div th:text="${user.getAge()}"></div>
-                                </td>
-                                <td>
-                                    <div th:text="${user.getEmail()}"></div>
-                                </td>
-                                <td>
-                                    <th:block th:each="role : ${user.getRoles()}">
-                                        <span th:text="${role.getRole().replace('ROLE_', '')}"></span><span> </span>
-                                    </th:block>
-                                </td>
-                                <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-info" data-toggle="modal" th:data-target="'#modal' + ${user.getId()}">
-                                        Edit
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" th:id="'modal' + ${user.getId()}" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModal3Label3">Edit user</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
-                                                    <div class="modal-body">
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-6 offset-3">
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'id' + ${user.getId()}">ID</label>
-                                                                        <input class="form-control" type="text" th:name="id" th:value="*{id}" th:id="'id' + ${user.getId()}" placeholder="ID" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'firstName' + ${user.getId()}">First name</label>
-                                                                        <input class="form-control" type="text" th:name="firstName" th:value="*{firstName}" th:id="'firstName' + ${user.getId()}" placeholder="First name"/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'lastName' + ${user.getId()}">Last name</label>
-                                                                        <input class="form-control" type="text" th:name="lastName" th:value="*{lastName}" th:id="'lastName' + ${user.getId()}" placeholder="Last name"/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'age' + ${user.getId()}">Age</label>
-                                                                        <input class="form-control" type="number" th:name="age" th:value="*{age}" th:id="'age' + ${user.getId()}" placeholder="Age"/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'email' + ${user.getId()}">Email</label>
-                                                                        <input class="form-control" type="email" th:name="email" th:value="*{email}" th:id="'email' + ${user.getId()}" placeholder="Email"/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'password' + ${user.getId()}">Password</label>
-                                                                        <input class="form-control" type="password" th:name="password" value="" th:id="'password' + ${user.getId()}"/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'listRoles' + ${user.getId()}">Role</label>
-                                                                        <select multiple class="form-control custom-select" name="roles" th:id="'listRoles' + ${user.getId()}" size="2">
-                                                                            <th:block th:each="role : ${listRole}">
-                                                                                <option th:selected="${user.getRoles().contains(role)}" th:value="${role.getId()}" th:text="${role.getRole().replace('ROLE_', '')}"></option>
-                                                                            </th:block>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="'#modalDelete' + ${user.getId()}">
-                                        Delete
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" th:id="'modalDelete' + ${user.getId()}" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalDeleteLabel3">Delete user</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
-                                                    <div class="modal-body">
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-6 offset-3">
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'id' + ${user.getId()}">ID</label>
-                                                                        <input class="form-control" type="text" th:name="id" th:value="${user.getId()}" th:id="'id' + ${user.getId()}" placeholder="ID" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'firstName' + ${user.getId()}">First name</label>
-                                                                        <input class="form-control" type="text" th:name="firstName" th:value="${user.getFirstName()}" th:id="'firstName' + ${user.getId()}" placeholder="First name" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'lastName' + ${user.getId()}">Last name</label>
-                                                                        <input class="form-control" type="text" th:name="lastName" th:value="${user.getLastName()}" th:id="'lastName' + ${user.getId()}" placeholder="Last name" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'age' + ${user.getId()}">Age</label>
-                                                                        <input class="form-control" type="number" th:name="age" th:value="${user.getAge()}" th:id="'age' + ${user.getId()}" placeholder="Age" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'email' + ${user.getId()}">Email</label>
-                                                                        <input class="form-control" type="email" th:name="email" th:value="${user.getEmail()}" th:id="'email' + ${user.getId()}" placeholder="Email" readonly/>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="d-flex justify-content-center font-weight-bold mb-0" th:for="'listRoles' + ${user.getId()}">Role</label>
-                                                                        <select multiple class="form-control custom-select" name="roles" th:id="'listRoles' + ${user.getId()}" size="2" readonly>
-                                                                            <th:block th:each="role : ${listRole}">
-                                                                                <option th:selected="${user.getRoles().contains(role)}" th:value="${role.getId()}" th:text="${role.getRole().replace('ROLE_', '')}"></option>
-                                                                            </th:block>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -217,40 +69,6 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-4 offset-4">
-                                    <form th:method="post" th:action="@{/admin}" th:object="${newUser}">
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="firstName">First name</label>
-                                            <input class="form-control" type="text" th:field="*{firstName}" id="firstName" placeholder="First name"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="lastName">Last name</label>
-                                            <input class="form-control" type="text" th:field="*{lastName}" id="lastName" placeholder="Last name"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="age">Age</label>
-                                            <input class="form-control" type="number" th:field="*{age}" id="age" placeholder="Age"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="email">Email</label>
-                                            <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="Email"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="password">Password</label>
-                                            <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="d-flex justify-content-center font-weight-bold mb-0" for="listRoles">Role</label>
-                                            <select multiple class="form-control custom-select" name="roles" id="listRoles" size="2">
-                                                <th:block th:each="role : ${listRole}">
-                                                    <option th:value="${role.getId()}" th:text="${role.getRole().replace('ROLE_', '')}"></option>
-                                                </th:block>
-                                            </select>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <input id="add-buttons" class="btn btn-success btn-lg" type="submit" value="Add new user"/>
-                                        </div>
-                                    </form>
-
                                     <form>
                                         <div class="form-group">
                                             <label class="d-flex justify-content-center font-weight-bold mb-0" for="firstName-add">First name</label>
@@ -340,9 +158,6 @@
                                         <th:block th:each="role : ${listRole}">
                                             <option th:id="${role.getRole().replace('ROLE_', '')}" th:text="${role.getRole().replace('ROLE_', '')}"></option>
                                         </th:block>
-<!--                                        <th:block th:each="role : ${listRole}">-->
-<!--                                            <option th:selected="${user.getRoles().contains(role)}" th:value="${role.getId()}" th:text="${role.getRole().replace('ROLE_', '')}"></option>-->
-<!--                                        </th:block>-->
                                     </select>
                                 </div>
                             </div>
@@ -399,9 +214,6 @@
                                         <th:block th:each="role : ${listRole}">
                                             <option th:id="${role.getRole().replace('ROLE_', '')}" th:text="${role.getRole().replace('ROLE_', '')}"></option>
                                         </th:block>
-                                        <!--                                        <th:block th:each="role : ${listRole}">-->
-                                        <!--                                            <option th:selected="${user.getRoles().contains(role)}" th:value="${role.getId()}" th:text="${role.getRole().replace('ROLE_', '')}"></option>-->
-                                        <!--                                        </th:block>-->
                                     </select>
                                 </div>
                             </div>
@@ -417,52 +229,9 @@
     </div>
 </div>
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/d3js/6.3.1/d3.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<!--<script>-->
-<!--    $(function () {-->
-<!--        $.get('/api/users').done(function (persons) {-->
-<!--            persons.forEach(function (person) {-->
-<!--                $('tbody#main-body-table').append(`-->
-<!--                            <tr id="${person.id}">-->
-<!--                                <td>-->
-<!--                                    <div>${person.id}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div>${person.firstName}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div>${person.lastName}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div>${person.age}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div>${person.email}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div>${person.roles.reduce((accumulator, currentValue) => accumulator + " " + currentValue, "")}</div>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    &lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--                                    <button type="button" class="btn btn-info" data-toggle="modal" th:data-target="#modalEdit">-->
-<!--                                        Edit-->
-<!--                                    </button>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    &lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--                                    <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="#modalDelete">-->
-<!--                                        Delete-->
-<!--                                    </button>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-<!--                `)-->
-<!--            });-->
-<!--        })-->
-<!--    });-->
-<!--</script>-->
 <script>
     $(function () {
         fetch('http://localhost:8133/api/users')
@@ -499,11 +268,6 @@
                         </td>
                     `)
 
-                // $( "#foo" ).bind( "click", function() {
-                //     alert( "User clicked on 'foo.'" );
-                // });
-
-
                 })
             )
         .then(function () {
@@ -519,9 +283,7 @@
                         $("div#modalEdit input[name='age']").val(person.age);
                         $("div#modalEdit input[name='email']").val(person.email);
                         $("div#modalEdit option").prop('selected', false);
-                        // console.log(person)
                         for (const role of person.roles) {
-                            // console.log(role)
                             $("div#modalEdit option#" + role).prop('selected', true);
                         }
                     })
@@ -538,20 +300,13 @@
                         $("div#modalDelete input[name='age']").val(person.age);
                         $("div#modalDelete input[name='email']").val(person.email);
                         $("div#modalDelete option").prop('selected', false);
-                        // console.log(person)
                         for (const role of person.roles) {
-                            // console.log(role)
                             $("div#modalDelete option#" + role).prop('selected', true);
                         }
                     })
             })
         })
-        $('tbody').append(`
-                        <tr>
-                            <td>123</td>
-                            <td>321</td>
-                        </tr>
-                    `)
+
         $('#button-edit').bind( "click", async function(e) {
             e.preventDefault();
 
@@ -570,7 +325,6 @@
                 age: age,
                 roles: roles
             }
-            // console.log(data)
 
             let response = await fetch('http://localhost:8133/api/users/' + id, {
                 method: 'PUT',
@@ -581,17 +335,6 @@
             });
 
             let result = await response.json();
-            // console.log("result= ")
-            // console.log(result)
-            //
-            // console.log("tr with id:")
-            // console.log($("tbody#main-body-table tr#" + id + " td[name='firstName']"))
-            // console.log($("tbody#main-body-table tr#" + id + " td[name='firstName']").text())
-            // console.log($("tbody#main-body-table tr#" + id + " td[name='firstName']").html())
-            // console.log($("tbody#main-body-table tr#" + id + " td[name='firstName']").val())
-            //
-            // console.log("result.firstName = ")
-            // console.log(result.firstName)
 
             $("tbody#main-body-table tr#" + id + " td[name='firstName']").html(result.firstName)
             $("tbody#main-body-table tr#" + id + " td[name='lastName']").html(result.lastName)
@@ -599,7 +342,6 @@
             $("tbody#main-body-table tr#" + id + " td[name='email']").html(result.email)
             $("tbody#main-body-table tr#" + id + " td[name='roles']").empty()
             for (const role of result.roles) {
-                // console.log(role)
                 $("tbody#main-body-table tr#" + id + " td[name='roles']").append(`
                     <span>${role} </span>
                 `)
@@ -616,9 +358,6 @@
             let response = await fetch('http://localhost:8133/api/users/' + id, {
                 method: 'DELETE'
             });
-
-            // console.log("response=")
-            // console.log(response)
 
             $("tbody#main-body-table tr#" + id).remove()
 
@@ -643,9 +382,6 @@
                 roles: roles
             }
 
-            console.log("data=")
-            console.log(data)
-
             let response = await fetch("http://localhost:8133/api/users", {
                 method: "POST",
                 headers: {
@@ -655,9 +391,6 @@
             })
 
             let result = await response.json()
-
-            console.log("result=")
-            console.log(result)
 
             $('tbody#main-body-table').append(`
                 <tr id="${result.id}">
@@ -669,11 +402,13 @@
                     <td name="roles"></td>
                 </tr>
             `)
+
             result.roles.forEach(function (role) {
                 $("tbody#main-body-table tr#" + result.id + " td[name='roles']").append(`
                         <span>${role} </span>
                 `)
             })
+
             $('tbody#main-body-table tr#' + result.id).append(`
                 <td>
                     <!-- Button edit trigger modal -->
@@ -699,13 +434,12 @@
                         $("div#modalEdit input[name='age']").val(person.age);
                         $("div#modalEdit input[name='email']").val(person.email);
                         $("div#modalEdit option").prop('selected', false);
-                        // console.log(person)
                         for (const role of person.roles) {
-                            // console.log(role)
                             $("div#modalEdit option#" + role).prop('selected', true);
                         }
                     })
             })
+
             $("button#delete-" + result.id).bind( "click", function(e) {
                 fetch('http://localhost:8133/api/users/' + result.id)
                     .then(response => response.json())
@@ -716,9 +450,7 @@
                         $("div#modalDelete input[name='age']").val(person.age);
                         $("div#modalDelete input[name='email']").val(person.email);
                         $("div#modalDelete option").prop('selected', false);
-                        // console.log(person)
                         for (const role of person.roles) {
-                            // console.log(role)
                             $("div#modalDelete option#" + role).prop('selected', true);
                         }
                     })
@@ -732,8 +464,6 @@
             $("#email-add").val("")
             $("#password-add").val("")
             $("#listRoles-add option").prop('selected', false);
-
-
         })
 
     })
