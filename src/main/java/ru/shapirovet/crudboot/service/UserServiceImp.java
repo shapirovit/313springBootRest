@@ -43,7 +43,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        if (userRepository.findUserByLogin(user.getEmail()) == null) {
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("This user already exist!!!");
+        }
     }
 
     @Override
